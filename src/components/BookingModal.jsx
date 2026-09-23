@@ -4,6 +4,7 @@ import confetti from 'canvas-confetti';
 import { SERVICES_DATA, ADDONS_DATA } from '../data/servicesData';
 import { GHANA_LOCATIONS, TIME_SLOTS } from '../data/locationsData';
 import { formatGHS, DISPLAY_PHONE, WHATSAPP_NUMBER, getWhatsAppLink } from '../utils/formatters';
+import { createBooking } from '../firebase/firestoreService';
 
 export function BookingModal({ isOpen, onClose, initialConfig }) {
   const [step, setStep] = useState(1);
@@ -113,29 +114,21 @@ export function BookingModal({ isOpen, onClose, initialConfig }) {
         notes
       };
 
-      const res = await fetch('/api/bookings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      const data = await res.json();
-      if (data.success) {
-        setBookingSuccess(data.booking);
-        try {
-          confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 }
-          });
-        } catch (e) {
-          // confetti fallback
-        }
-      } else {
-        setErrorMsg(data.message || 'Error booking appointment.');
+      // ── Save booking to Firestore ──────────────────────────
+      const savedBooking = await createBooking(payload);
+      setBookingSuccess(savedBooking);
+      try {
+        confetti({
+          particleCount: 100,
+          spread: 70,
+          origin: { y: 0.6 }
+        });
+      } catch (e) {
+        // confetti fallback
       }
     } catch (err) {
-      setErrorMsg('Failed to connect to server. Please try again or WhatsApp us.');
+      console.error('Firestore booking error:', err);
+      setErrorMsg('Failed to save booking. Please try again or WhatsApp us.');
     } finally {
       setSubmitting(false);
     }

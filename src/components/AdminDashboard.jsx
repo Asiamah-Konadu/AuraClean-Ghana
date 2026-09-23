@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Shield, Users, DollarSign, Sparkles, CheckCircle2, Clock, Truck, RefreshCw, Search, Filter, Trash2, Edit, Plus, MessageSquare, MapPin, X } from 'lucide-react';
 import { formatGHS } from '../utils/formatters';
+import {
+  fetchBookings,
+  fetchDashboardStats,
+  updateBookingStatus,
+  deleteBooking,
+  fetchCleaners,
+} from '../firebase/firestoreService';
 
 export function AdminDashboard({ onClose }) {
   const [stats, setStats] = useState(null);
@@ -19,20 +26,15 @@ export function AdminDashboard({ onClose }) {
   const fetchData = async () => {
     setLoading(true);
     try {
-      // Fetch stats
-      const statsRes = await fetch('/api/stats');
-      const statsData = await statsRes.json();
-      if (statsData.success) setStats(statsData.stats);
+      // Fetch stats from Firestore
+      const statsData = await fetchDashboardStats();
+      setStats(statsData);
 
-      // Fetch bookings with filters
-      let url = `/api/bookings?status=${statusFilter}&city=${cityFilter}`;
-      if (searchQuery) url += `&search=${encodeURIComponent(searchQuery)}`;
-      
-      const bookRes = await fetch(url);
-      const bookData = await bookRes.json();
-      if (bookData.success) setBookings(bookData.bookings);
+      // Fetch bookings with filters from Firestore
+      const bookingsData = await fetchBookings(statusFilter, cityFilter, searchQuery);
+      setBookings(bookingsData);
     } catch (err) {
-      console.error('Error fetching admin data:', err);
+      console.error('Error fetching Firestore data:', err);
     } finally {
       setLoading(false);
     }
@@ -41,18 +43,8 @@ export function AdminDashboard({ onClose }) {
   const handleUpdateStatus = async (id, newStatus, cleaner) => {
     setUpdatingId(id);
     try {
-      const res = await fetch(`/api/bookings/${id}/status`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          status: newStatus,
-          cleanerAssigned: cleaner
-        })
-      });
-      const data = await res.json();
-      if (data.success) {
-        fetchData();
-      }
+      await updateBookingStatus(id, newStatus, cleaner);
+      fetchData();
     } catch (err) {
       console.error('Failed to update booking:', err);
     } finally {
@@ -63,11 +55,8 @@ export function AdminDashboard({ onClose }) {
   const handleDeleteBooking = async (id) => {
     if (!window.confirm(`Are you sure you want to delete booking ${id}?`)) return;
     try {
-      const res = await fetch(`/api/bookings/${id}`, { method: 'DELETE' });
-      const data = await res.json();
-      if (data.success) {
-        fetchData();
-      }
+      await deleteBooking(id);
+      fetchData();
     } catch (err) {
       console.error('Failed to delete booking:', err);
     }
