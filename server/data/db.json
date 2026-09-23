@@ -1,0 +1,265 @@
+{
+  "services": [
+    {
+      "id": "standard-clean",
+      "name": "Standard Home Cleaning",
+      "tagline": "Regular maintenance for fresh, spotless living spaces",
+      "basePrice": 250,
+      "priceUnit": "per session",
+      "icon": "Sparkles",
+      "popular": false,
+      "features": [
+        "Dusting all surfaces & baseboards",
+        "Vacuuming & mopping all tile/hardwood floors",
+        "Kitchen counters, sink, exterior appliances wiped",
+        "Complete bathroom sanitization & mirrors",
+        "Trash removal & fresh bag replacement",
+        "Bed making & living area straightening"
+      ],
+      "estimatedDuration": "2 - 3.5 Hours",
+      "recommendedFrequency": "Weekly or Bi-Weekly"
+    },
+    {
+      "id": "deep-clean",
+      "name": "Luxury Deep Cleaning",
+      "tagline": "Intensive top-to-bottom scrub for refreshed homes",
+      "basePrice": 480,
+      "priceUnit": "per session",
+      "icon": "ShieldCheck",
+      "popular": true,
+      "features": [
+        "All Standard Cleaning tasks included",
+        "Interior oven, microwave & stove degreasing",
+        "Inside refrigerator scrubbing & deodorizing",
+        "Tile grout deep scrubbing & scale removal",
+        "Under & behind reachable furniture cleaning",
+        "Window sills, tracks, door frames & light fixtures",
+        "High-touch point antimicrobial disinfection"
+      ],
+      "estimatedDuration": "4 - 6 Hours",
+      "recommendedFrequency": "Monthly or Quarterly"
+    },
+    {
+      "id": "post-construction",
+      "name": "Post-Construction & Move-In Clean",
+      "tagline": "Heavy dust, paint splatter & debris removal for new buildings",
+      "basePrice": 750,
+      "priceUnit": "per property",
+      "icon": "Building2",
+      "popular": false,
+      "features": [
+        "Heavy drywall dust, cement & paint residue removal",
+        "Full interior & exterior window scraping & shine",
+        "Cabinet interiors, drawers & closet detailed cleaning",
+        "Polishing of all fixtures, switches & handles",
+        "High-powered industrial extraction vacuuming",
+        "Compound & patio power wash finish"
+      ],
+      "estimatedDuration": "6 - 10 Hours",
+      "recommendedFrequency": "One-Time Project"
+    },
+    {
+      "id": "commercial-office",
+      "name": "Commercial & Office Cleaning",
+      "tagline": "Professional corporate hygiene for peak workplace productivity",
+      "basePrice": 600,
+      "priceUnit": "per visit",
+      "icon": "Briefcase",
+      "popular": false,
+      "features": [
+        "Workstation & conference room sanitization",
+        "Reception area & glass entrance polishing",
+        "Office restroom deep sanitation & restocking",
+        "Kitchenette, water dispenser & coffee bar care",
+        "Carpet vacuuming & hard floor buffing",
+        "Discreet after-hours or early morning scheduling"
+      ],
+      "estimatedDuration": "Custom Hours",
+      "recommendedFrequency": "Daily / Weekly Contract"
+    },
+    {
+      "id": "upholstery-carpet",
+      "name": "Carpet & Upholstery Steam Wash",
+      "tagline": "Hot water extraction & stain extraction for couches & rugs",
+      "basePrice": 350,
+      "priceUnit": "per set",
+      "icon": "Armchair",
+      "popular": false,
+      "features": [
+        "Deep fiber steam injection & hot water extraction",
+        "Stubborn stain & beverage spill treatment",
+        "Pet odor, allergen & bacteria neutralization",
+        "Fabric conditioner & color brightening",
+        "Fast 3-hour quick-dry technology",
+        "Leather sofa conditioning & protection"
+      ],
+      "estimatedDuration": "1.5 - 3 Hours",
+      "recommendedFrequency": "Every 3-6 Months"
+    },
+    {
+      "id": "fumigation-pest",
+      "name": "Fumigation & Pest Extermination",
+      "tagline": "Certified safe fumigation against pests, termites & roaches",
+      "basePrice": 400,
+      "priceUnit": "per treatment",
+      "icon": "Bug",
+      "popular": false,
+      "features": [
+        "EPA-approved odorless & safe chemicals",
+        "Mosquito, cockroach, rodent & bed bug treatment",
+        "Termite perimeter barrier injection",
+        "Garden & compound pest barrier spraying",
+        "Drainage & gutter larvicide treatment",
+        "3-Month free retreatment warranty"
+      ],
+      "estimatedDuration": "2 - 4 Hours",
+      "recommendedFrequency": "Bi-Annual"
+    }
+  ],
+  "addons": [
+    { "id": "oven_fridge", "name": "Inside Fridge & Oven Scrub", "price": 120 },
+    { "id": "windows_exterior", "name": "Exterior High Window Wash", "price": 100 },
+    { "id": "laundry_ironing", "name": "Laundry Wash & Steam Ironing", "price": 150 },
+    { "id": "pressure_wash", "name": "Compound & Driveway Pressure Wash", "price": 200 },
+    { "id": "water_tank", "name": "Overhead Poly-Tank Deep Disinfection", "price": 180 },
+    { "id": "closet_org", "name": "Wardrobe & Closet Decluttering", "price": 90 }
+  ],
+  "bookings": [
+    {
+      "id": "AC-GH-1092",
+      "customerName": "Kwame Mensah",
+      "phone": "0550103277",
+      "email": "kwame.mensah@gmail.com",
+      "serviceId": "deep-clean",
+      "serviceName": "Luxury Deep Cleaning",
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "frequency": "one-time",
+      "addons": ["Inside Fridge & Oven Scrub", "Compound & Driveway Pressure Wash"],
+      "city": "Accra",
+      "location": "East Legon, near ARS Junction",
+      "gpsAddress": "GA-342-9901",
+      "date": "2026-09-24",
+      "timeSlot": "09:00 AM",
+      "totalAmount": 800,
+      "paymentMethod": "mtn_momo",
+      "paymentStatus": "Paid (MoMo Verified)",
+      "status": "Cleaner Dispatched",
+      "cleanerAssigned": "Team Emerald (Lead: Sarah Addo)",
+      "notes": "Please call 10 mins before arrival at the gate.",
+      "createdAt": "2026-09-23T08:15:00Z"
+    },
+    {
+      "id": "AC-GH-1088",
+      "customerName": "Abena Serwaa",
+      "phone": "0244123456",
+      "email": "abena.s@outlook.com",
+      "serviceId": "post-construction",
+      "serviceName": "Post-Construction & Move-In Clean",
+      "bedrooms": 4,
+      "bathrooms": 4,
+      "frequency": "one-time",
+      "addons": ["Exterior High Window Wash", "Overhead Poly-Tank Deep Disinfection"],
+      "city": "Accra",
+      "location": "Cantonments, 4th Circular Rd",
+      "gpsAddress": "GL-019-3321",
+      "date": "2026-09-25",
+      "timeSlot": "08:30 AM",
+      "totalAmount": 1130,
+      "paymentMethod": "pay_after",
+      "paymentStatus": "Pending On-Site Payment",
+      "status": "Confirmed",
+      "cleanerAssigned": "Team Gold (Lead: Emmanuel Darko)",
+      "notes": "Newly built 2-storey house, key with security guard.",
+      "createdAt": "2026-09-22T14:30:00Z"
+    },
+    {
+      "id": "AC-GH-1074",
+      "customerName": "Dr. Kofi Osei",
+      "phone": "0208765432",
+      "email": "kofi.osei@clinitech.com",
+      "serviceId": "commercial-office",
+      "serviceName": "Commercial & Office Cleaning",
+      "bedrooms": 1,
+      "bathrooms": 2,
+      "frequency": "weekly",
+      "addons": [],
+      "city": "Kumasi",
+      "location": "Ahodwo, Near Golden Tulip Area",
+      "gpsAddress": "AK-045-8812",
+      "date": "2026-09-23",
+      "timeSlot": "07:00 AM",
+      "totalAmount": 480,
+      "paymentMethod": "telecel_cash",
+      "paymentStatus": "Paid",
+      "status": "In Progress",
+      "cleanerAssigned": "Team Ashanti (Lead: Rita Asare)",
+      "notes": "Clean reception and boardroom first.",
+      "createdAt": "2026-09-21T10:00:00Z"
+    }
+  ],
+  "reviews": [
+    {
+      "id": "rev-1",
+      "author": "Nana Ama Poku",
+      "location": "Airport Residential, Accra",
+      "rating": 5,
+      "service": "Luxury Deep Cleaning",
+      "comment": "AuraClean transformed my 4-bedroom villa before our family gathering. The team was punctual, in neat uniforms, and extremely thorough with the oven and grout. Highly recommended!",
+      "date": "2 days ago",
+      "verified": true
+    },
+    {
+      "id": "rev-2",
+      "author": "Kojo Boateng",
+      "location": "East Legon, Accra",
+      "rating": 5,
+      "service": "Post-Construction Clean",
+      "comment": "After 18 months of building, the cement dust felt impossible to clean. AuraClean's industrial machines made our floors crystal clear within 6 hours. Paid easily with MTN MoMo.",
+      "date": "1 week ago",
+      "verified": true
+    },
+    {
+      "id": "rev-3",
+      "author": "Dr. Patricia Annan",
+      "location": "Ahodwo, Kumasi",
+      "rating": 5,
+      "service": "Carpet & Upholstery Steam Wash",
+      "comment": "Our cream fabric sofa had stubborn stains from kids and tea. AuraClean brought it back to life like brand new! Wonderful customer support on WhatsApp.",
+      "date": "2 weeks ago",
+      "verified": true
+    }
+  ],
+  "coverageAreas": [
+    {
+      "region": "Greater Accra",
+      "hubs": ["East Legon", "Cantonments", "Airport Residential Area", "Osu", "Dzorwulu", "Roman Ridge", "Spintex", "Tema Community 1-25", "Dansoman", "Achimota", "Madina", "Adenta", "Labone", "Ridge"],
+      "dispatchTime": "Within 45 Mins",
+      "availableCrews": 8
+    },
+    {
+      "region": "Ashanti (Kumasi)",
+      "hubs": ["Ahodwo", "Nhyiaeso", "Asokwa", "Ridge", "KNUST Campus Area", "Daban", "Tanoso", "Santasi"],
+      "dispatchTime": "Within 60 Mins",
+      "availableCrews": 4
+    },
+    {
+      "region": "Western Region",
+      "hubs": ["Takoradi Beach Road", "Airport Ridge", "Anaji", "Effiakuma", "Sekondi"],
+      "dispatchTime": "Scheduled Advance",
+      "availableCrews": 3
+    }
+  ],
+  "inquiries": [
+    {
+      "id": "inq-1",
+      "name": "Gilbert Mensah",
+      "phone": "0550103277",
+      "email": "gilbert@venturesgh.com",
+      "subject": "Office Recurring Cleaning Contract",
+      "message": "We have a 3-storey office building in Ridge Accra and need daily evening cleaning.",
+      "date": "2026-09-23T06:00:00Z",
+      "status": "Responded"
+    }
+  ]
+}
