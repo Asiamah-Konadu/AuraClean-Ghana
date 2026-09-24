@@ -12,7 +12,21 @@ export function Navbar({ onOpenBooking, onOpenTracking, darkMode, setDarkMode })
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesDropdownOpen, setServicesDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const dropdownTimeoutRef = useRef(null);
   const location = useLocation();
+
+  const handleDropdownEnter = () => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
+    }
+    setServicesDropdownOpen(true);
+  };
+
+  const handleDropdownLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setServicesDropdownOpen(false);
+    }, 180);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,56 +69,68 @@ export function Navbar({ onOpenBooking, onOpenTracking, darkMode, setDarkMode })
     {
       id: 'deep-clean',
       name: 'Luxury Deep Clean',
-      desc: 'Intensive top-to-bottom scrub & sanitization',
+      desc: 'Top-to-bottom intensive scrub & clinical sanitization',
       price: 'From GH₵ 480',
       icon: ShieldCheck,
-      badge: 'Popular',
-      badgeColor: '#10b981'
+      badge: 'Most Popular',
+      badgeColor: '#10b981',
+      iconBg: 'rgba(16, 185, 129, 0.14)',
+      iconColor: '#059669'
     },
     {
       id: 'standard-clean',
       name: 'Standard Home Clean',
-      desc: 'Regular maintenance for busy homes',
+      desc: 'Routine maintenance & freshness for busy homes',
       price: 'From GH₵ 250',
       icon: Sparkles,
       badge: 'Flexible',
-      badgeColor: '#0284c7'
+      badgeColor: '#0284c7',
+      iconBg: 'rgba(2, 132, 199, 0.14)',
+      iconColor: '#0284c7'
     },
     {
       id: 'post-construction',
       name: 'Post-Construction & Move-In',
-      desc: 'Heavy dust, paint splatter & plaster scraping',
+      desc: 'Cement haze, paint splatter & fine dust extraction',
       price: 'From GH₵ 750',
       icon: Building2,
       badge: 'Heavy Duty',
-      badgeColor: '#f59e0b'
+      badgeColor: '#f59e0b',
+      iconBg: 'rgba(245, 158, 11, 0.14)',
+      iconColor: '#d97706'
     },
     {
       id: 'commercial-office',
       name: 'Commercial & Office Cleaning',
-      desc: 'Nightly & weekend corporate facility care',
+      desc: 'Scheduled corporate disinfection & workspace care',
       price: 'Custom Quote',
       icon: Building2,
-      badge: 'B2B',
-      badgeColor: '#8b5cf6'
+      badge: 'Corporate',
+      badgeColor: '#8b5cf6',
+      iconBg: 'rgba(139, 92, 246, 0.14)',
+      iconColor: '#7c3aed'
     },
     {
       id: 'sofa-carpet',
-      name: 'Sofa & Carpet Extraction',
-      desc: 'Deep steam injection & stain extraction',
+      name: 'Upholstery & Carpet Steam',
+      desc: 'Industrial hot-water extraction & deep stain removal',
       price: 'From GH₵ 350',
       icon: Layers,
-      badge: 'Steam Clean',
-      badgeColor: '#059669'
+      badge: 'Steam Wash',
+      badgeColor: '#059669',
+      iconBg: 'rgba(5, 150, 105, 0.14)',
+      iconColor: '#059669'
     },
     {
       id: 'fumigation-pest',
       name: 'Fumigation & Pest Control',
-      desc: 'EPA-certified pest & insect eradication',
+      desc: 'EPA-certified insect eradication & sanitization',
       price: 'From GH₵ 400',
       icon: Bug,
       badge: 'Certified',
-      badgeColor: '#dc2626'
+      badgeColor: '#ef4444',
+      iconBg: 'rgba(239, 68, 68, 0.14)',
+      iconColor: '#dc2626'
     }
   ];
 
@@ -269,8 +295,8 @@ export function Navbar({ onOpenBooking, onOpenTracking, darkMode, setDarkMode })
                     key={link.name} 
                     ref={dropdownRef}
                     style={{ position: 'relative' }}
-                    onMouseEnter={() => setServicesDropdownOpen(true)}
-                    onMouseLeave={() => setServicesDropdownOpen(false)}
+                    onMouseEnter={handleDropdownEnter}
+                    onMouseLeave={handleDropdownLeave}
                   >
                     <Link
                       to={link.path}
@@ -283,7 +309,7 @@ export function Navbar({ onOpenBooking, onOpenTracking, darkMode, setDarkMode })
                         size={14} 
                         style={{ 
                           transform: servicesDropdownOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                          transition: 'transform 0.2s ease'
+                          transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1)'
                         }} 
                       />
                     </Link>
@@ -292,97 +318,151 @@ export function Navbar({ onOpenBooking, onOpenTracking, darkMode, setDarkMode })
                     {servicesDropdownOpen && (
                       <div 
                         className="services-dropdown-panel"
-                        style={{
-                          position: 'absolute',
-                          top: '100%',
-                          left: '50%',
-                          transform: 'translateX(-50%)',
-                          width: '560px',
-                          background: 'var(--bg-surface)',
-                          borderRadius: '16px',
-                          boxShadow: '0 20px 45px rgba(0,0,0,0.15), 0 0 0 1px var(--border-subtle)',
-                          padding: '1.25rem',
-                          display: 'grid',
-                          gridTemplateColumns: 'repeat(2, 1fr)',
-                          gap: '0.75rem',
-                          zIndex: 150,
-                          animation: 'dropdownFadeIn 0.2s ease'
-                        }}
+                        onMouseEnter={handleDropdownEnter}
+                        onMouseLeave={handleDropdownLeave}
                       >
-                        {serviceItems.map((svc) => {
-                          const IconComponent = svc.icon;
-                          return (
-                            <Link
-                              key={svc.id}
-                              to={`/services#${svc.id}`}
-                              onClick={() => setServicesDropdownOpen(false)}
-                              style={{
-                                display: 'flex',
-                                alignItems: 'flex-start',
-                                gap: '0.75rem',
-                                padding: '0.75rem',
-                                borderRadius: '12px',
-                                textDecoration: 'none',
-                                transition: 'all 0.2s ease',
-                                background: 'var(--bg-surface-elevated)',
-                                border: '1px solid var(--border-subtle)'
-                              }}
-                              className="dropdown-item-hover"
-                            >
-                              <div style={{
-                                width: '38px',
-                                height: '38px',
-                                borderRadius: '10px',
-                                background: 'var(--primary-subtle)',
-                                color: 'var(--primary)',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                flexShrink: 0
-                              }}>
-                                <IconComponent size={18} />
-                              </div>
-                              <div style={{ flex: 1, minWidth: 0 }}>
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.4rem', marginBottom: '0.15rem' }}>
-                                  <span style={{ fontSize: '0.88rem', fontWeight: '700', color: 'var(--text-primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                    {svc.name}
-                                  </span>
+                        <div className="mega-menu-inner">
+                          {/* Left 6-Card Services Section */}
+                          <div className="mega-menu-services">
+                            <div className="mega-menu-header">
+                              <span className="mega-section-tag">SPECIALIZED CLEANING SUITE</span>
+                              <Link 
+                                to="/services" 
+                                onClick={() => setServicesDropdownOpen(false)}
+                                className="mega-view-all"
+                              >
+                                <span>All 6 Packages</span>
+                                <ArrowRight size={13} />
+                              </Link>
+                            </div>
+
+                            <div className="mega-services-grid">
+                              {serviceItems.map((svc) => {
+                                const IconComponent = svc.icon;
+                                return (
+                                  <Link
+                                    key={svc.id}
+                                    to={`/services#${svc.id}`}
+                                    onClick={() => setServicesDropdownOpen(false)}
+                                    className="mega-service-card"
+                                  >
+                                    <div 
+                                      className="mega-icon-wrapper" 
+                                      style={{ background: svc.iconBg, color: svc.iconColor }}
+                                    >
+                                      <IconComponent size={20} />
+                                    </div>
+                                    <div className="mega-card-content">
+                                      <div className="mega-card-top">
+                                        <span className="mega-service-title">{svc.name}</span>
+                                        {svc.badge && (
+                                          <span 
+                                            className="mega-service-badge"
+                                            style={{
+                                              color: svc.badgeColor,
+                                              borderColor: `${svc.badgeColor}33`,
+                                              background: `${svc.badgeColor}15`
+                                            }}
+                                          >
+                                            {svc.badge}
+                                          </span>
+                                        )}
+                                      </div>
+                                      <p className="mega-service-desc">{svc.desc}</p>
+                                      <div className="mega-card-bottom">
+                                        <span className="mega-price-tag">{svc.price}</span>
+                                        <span className="mega-hover-arrow">
+                                          <ChevronRight size={13} />
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </div>
+
+                          {/* Right Feature Sidebar */}
+                          <div className="mega-menu-sidebar">
+                            {/* Estimator Spotlight Card */}
+                            <div className="mega-feature-box">
+                              <div className="mega-feature-header">
+                                <div className="mega-feature-icon">
+                                  <Calculator size={18} />
                                 </div>
-                                <p style={{ fontSize: '0.75rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.3 }}>
-                                  {svc.desc}
-                                </p>
-                                <span style={{ fontSize: '0.72rem', fontWeight: '700', color: 'var(--primary-light)', marginTop: '0.25rem', display: 'inline-block' }}>
-                                  {svc.price}
+                                <div>
+                                  <span className="mega-feature-label">INSTANT QUOTE</span>
+                                  <h4 className="mega-feature-title">Cost Calculator</h4>
+                                </div>
+                              </div>
+                              <p className="mega-feature-desc">
+                                Select bedrooms, bathrooms & add-ons for instant MoMo pricing in seconds.
+                              </p>
+                              <Link
+                                to="/calculator"
+                                onClick={() => setServicesDropdownOpen(false)}
+                                className="btn btn-primary"
+                                style={{ width: '100%', justifyContent: 'center', padding: '0.55rem 0.9rem', fontSize: '0.8rem', gap: '0.4rem' }}
+                              >
+                                <Calculator size={14} />
+                                <span>Calculate Now</span>
+                              </Link>
+                            </div>
+
+                            {/* Quick WhatsApp SLA Consultation */}
+                            <div className="mega-quick-contact">
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+                                <MessageSquare size={15} color="#10b981" />
+                                <span style={{ fontSize: '0.82rem', fontWeight: '700', color: 'var(--text-primary)' }}>
+                                  Facility & Office SLAs
                                 </span>
                               </div>
-                            </Link>
-                          );
-                        })}
+                              <p style={{ fontSize: '0.73rem', color: 'var(--text-muted)', lineHeight: 1.35, margin: '0 0 0.55rem 0' }}>
+                                Commercial cleaning contracts for corporate hubs & embassies across Accra.
+                              </p>
+                              <a
+                                href={getWhatsAppLink('Hello AuraClean, I would like to inquire about a commercial/recurring cleaning SLA contract.')}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="mega-wa-link"
+                              >
+                                <span>WhatsApp Dispatch</span>
+                                <ChevronRight size={13} />
+                              </a>
+                            </div>
 
-                        {/* Dropdown Bottom Banner */}
-                        <div style={{
-                          gridColumn: 'span 2',
-                          background: 'linear-gradient(90deg, var(--primary-subtle), var(--accent-gold-subtle))',
-                          borderRadius: '10px',
-                          padding: '0.75rem 1rem',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          border: '1px solid var(--border-primary)'
-                        }}>
-                          <span style={{ fontSize: '0.82rem', fontWeight: '600', color: 'var(--text-primary)' }}>
-                            Need custom recurring schedule or facility audit?
-                          </span>
+                            {/* Trust strip */}
+                            <div className="mega-trust-strip">
+                              <div className="mega-trust-item">
+                                <ShieldCheck size={13} color="#10b981" />
+                                <span>CID Vetted Cleaners</span>
+                              </div>
+                              <div className="mega-trust-item">
+                                <Sparkles size={13} color="#f59e0b" />
+                                <span>24hr Free Re-clean</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Bottom Full-Width Guarantee Bar */}
+                        <div className="mega-bottom-bar">
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                            <span className="badge-gold" style={{ fontSize: '0.68rem', padding: '0.12rem 0.45rem' }}>100% SATISFACTION</span>
+                            <span style={{ fontSize: '0.8rem', color: 'var(--text-primary)', fontWeight: '600' }}>
+                              Accra, Tema, Kumasi & Takoradi Dispatch
+                            </span>
+                          </div>
                           <button
                             onClick={(e) => {
                               e.preventDefault();
                               setServicesDropdownOpen(false);
                               onOpenBooking();
                             }}
-                            className="btn btn-primary"
-                            style={{ padding: '0.4rem 0.9rem', fontSize: '0.8rem' }}
+                            className="mega-bottom-btn"
                           >
-                            <span>Book Consultation</span>
+                            <Sparkles size={13} />
+                            <span>Book Cleaning Slot</span>
                           </button>
                         </div>
                       </div>
@@ -721,10 +801,309 @@ export function Navbar({ onOpenBooking, onOpenTracking, darkMode, setDarkMode })
           font-weight: 700;
         }
 
-        .dropdown-item-hover:hover {
-          background: var(--primary-subtle) !important;
-          border-color: var(--border-primary) !important;
+        .services-dropdown-panel {
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 820px;
+          padding-top: 12px;
+          z-index: 250;
+          animation: megaDropdownSlide 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .services-dropdown-panel::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 14px;
+        }
+
+        .mega-menu-inner {
+          background: var(--bg-surface);
+          border-radius: 20px 20px 0 0;
+          border: 1px solid var(--border-subtle);
+          border-bottom: none;
+          box-shadow: 0 25px 60px -15px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.06);
+          backdrop-filter: blur(24px);
+          -webkit-backdrop-filter: blur(24px);
+          display: grid;
+          grid-template-columns: 1fr 270px;
+          overflow: hidden;
+        }
+
+        .mega-menu-services {
+          padding: 1.35rem;
+        }
+
+        .mega-menu-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 0.95rem;
+          padding-bottom: 0.55rem;
+          border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .mega-section-tag {
+          font-size: 0.68rem;
+          font-weight: 800;
+          letter-spacing: 0.08em;
+          color: var(--text-muted);
+          text-transform: uppercase;
+        }
+
+        .mega-view-all {
+          display: flex;
+          align-items: center;
+          gap: 0.35rem;
+          font-size: 0.78rem;
+          font-weight: 700;
+          color: var(--primary-light);
+          text-decoration: none;
+          transition: transform 0.2s ease;
+        }
+
+        .mega-view-all:hover {
+          transform: translateX(2px);
+          text-decoration: underline;
+        }
+
+        .mega-services-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.7rem;
+        }
+
+        .mega-service-card {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.75rem;
+          padding: 0.8rem;
+          border-radius: 14px;
+          text-decoration: none;
+          background: var(--bg-surface-elevated);
+          border: 1px solid var(--border-subtle);
+          transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mega-service-card:hover {
+          background: var(--primary-subtle);
+          border-color: var(--border-primary);
           transform: translateY(-2px);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+        }
+
+        .mega-icon-wrapper {
+          width: 38px;
+          height: 38px;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          transition: transform 0.2s ease;
+        }
+
+        .mega-service-card:hover .mega-icon-wrapper {
+          transform: scale(1.08);
+        }
+
+        .mega-card-content {
+          flex: 1;
+          min-width: 0;
+        }
+
+        .mega-card-top {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 0.35rem;
+          margin-bottom: 0.15rem;
+        }
+
+        .mega-service-title {
+          font-size: 0.86rem;
+          font-weight: 700;
+          color: var(--text-primary);
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .mega-service-badge {
+          font-size: 0.6rem;
+          font-weight: 800;
+          padding: 0.1rem 0.38rem;
+          border-radius: 6px;
+          border: 1px solid transparent;
+          letter-spacing: 0.02em;
+          flex-shrink: 0;
+        }
+
+        .mega-service-desc {
+          font-size: 0.72rem;
+          color: var(--text-secondary);
+          margin: 0;
+          line-height: 1.35;
+        }
+
+        .mega-card-bottom {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 0.35rem;
+        }
+
+        .mega-price-tag {
+          font-size: 0.73rem;
+          font-weight: 800;
+          color: var(--primary-light);
+        }
+
+        .mega-hover-arrow {
+          color: var(--text-muted);
+          opacity: 0;
+          transform: translateX(-4px);
+          transition: all 0.2s ease;
+        }
+
+        .mega-service-card:hover .mega-hover-arrow {
+          opacity: 1;
+          transform: translateX(0);
+          color: var(--primary-light);
+        }
+
+        .mega-menu-sidebar {
+          padding: 1.35rem;
+          background: var(--bg-surface-elevated);
+          border-left: 1px solid var(--border-subtle);
+          display: flex;
+          flex-direction: column;
+          gap: 0.85rem;
+        }
+
+        .mega-feature-box {
+          background: linear-gradient(135deg, var(--primary-subtle) 0%, rgba(245, 158, 11, 0.06) 100%);
+          border: 1px solid var(--border-primary);
+          border-radius: 14px;
+          padding: 0.9rem;
+        }
+
+        .mega-feature-header {
+          display: flex;
+          align-items: center;
+          gap: 0.55rem;
+          margin-bottom: 0.4rem;
+        }
+
+        .mega-feature-icon {
+          width: 30px;
+          height: 30px;
+          border-radius: 8px;
+          background: var(--primary);
+          color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .mega-feature-label {
+          font-size: 0.6rem;
+          font-weight: 800;
+          color: var(--accent-gold-dark);
+          letter-spacing: 0.06em;
+          display: block;
+        }
+
+        .mega-feature-title {
+          font-size: 0.85rem;
+          font-weight: 800;
+          color: var(--text-primary);
+          margin: 0;
+        }
+
+        .mega-feature-desc {
+          font-size: 0.72rem;
+          color: var(--text-secondary);
+          line-height: 1.35;
+          margin: 0 0 0.7rem 0;
+        }
+
+        .mega-quick-contact {
+          background: var(--bg-surface);
+          border: 1px solid var(--border-subtle);
+          border-radius: 12px;
+          padding: 0.75rem;
+        }
+
+        .mega-wa-link {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 0.74rem;
+          font-weight: 700;
+          color: #10b981;
+          text-decoration: none;
+          padding-top: 0.35rem;
+          border-top: 1px solid var(--border-subtle);
+          transition: gap 0.2s ease;
+        }
+
+        .mega-wa-link:hover {
+          text-decoration: underline;
+        }
+
+        .mega-trust-strip {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding-top: 0.35rem;
+          border-top: 1px solid var(--border-subtle);
+        }
+
+        .mega-trust-item {
+          display: flex;
+          align-items: center;
+          gap: 0.35rem;
+          font-size: 0.68rem;
+          font-weight: 600;
+          color: var(--text-secondary);
+        }
+
+        .mega-bottom-bar {
+          background: linear-gradient(90deg, var(--primary-subtle), var(--accent-gold-subtle));
+          border: 1px solid var(--border-subtle);
+          border-top: 1px solid var(--border-primary);
+          border-radius: 0 0 20px 20px;
+          padding: 0.75rem 1.35rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          box-shadow: 0 20px 45px rgba(0,0,0,0.12);
+        }
+
+        .mega-bottom-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.4rem;
+          background: var(--primary);
+          color: #ffffff;
+          border: none;
+          padding: 0.42rem 0.95rem;
+          border-radius: 10px;
+          font-size: 0.78rem;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
+        }
+
+        .mega-bottom-btn:hover {
+          background: var(--primary-dark);
+          transform: translateY(-1px);
         }
 
         .btn-dial-quick:hover {
@@ -742,14 +1121,14 @@ export function Navbar({ onOpenBooking, onOpenTracking, darkMode, setDarkMode })
           transform: scale(1.05) rotate(-3deg);
         }
 
-        @keyframes dropdownFadeIn {
+        @keyframes megaDropdownSlide {
           from {
             opacity: 0;
-            transform: translate(-50%, 8px);
+            transform: translate(-50%, 8px) scale(0.98);
           }
           to {
             opacity: 1;
-            transform: translate(-50%, 0);
+            transform: translate(-50%, 0) scale(1);
           }
         }
 
