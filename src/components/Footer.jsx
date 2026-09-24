@@ -1,5 +1,6 @@
 import React from 'react';
-import { Sparkles, MapPin, Phone, Mail, Clock, ShieldCheck, Heart, ArrowUp } from 'lucide-react';
+import { Sparkles, MapPin, Phone, Mail, Clock, ShieldCheck, Heart, ArrowUp, Lock } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { DISPLAY_PHONE, DISPLAY_PHONE_INTL, COMPANY_EMAIL, COMPANY_LOCATION, getWhatsAppLink } from '../utils/formatters';
 
 export function Footer({ onOpenBooking, onOpenTracking }) {
@@ -46,7 +47,7 @@ export function Footer({ onOpenBooking, onOpenTracking }) {
             </div>
 
             <p style={{ color: '#94a3b8', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '1.5rem' }}>
-              Ghana's leading luxury residential and commercial cleaning service. Setting five-star hygiene standards across Greater Accra, Kumasi, and Takoradi.
+              Ghana's premier luxury residential and commercial hygiene service. Setting five-star cleaning standards across Greater Accra, Kumasi, and Takoradi.
             </p>
 
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#34d399', fontSize: '0.85rem', fontWeight: '600' }}>
@@ -58,15 +59,15 @@ export function Footer({ onOpenBooking, onOpenTracking }) {
           {/* Quick Links */}
           <div>
             <h4 style={{ fontSize: '1.05rem', fontWeight: '700', color: '#ffffff', marginBottom: '1.25rem' }}>
-              Cleaning Services
+              Quick Navigation
             </h4>
             <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.9rem', color: '#94a3b8' }}>
-              <li><a href="#services" style={{ transition: 'color 0.2s' }}>Standard Home Cleaning</a></li>
-              <li><a href="#services" style={{ transition: 'color 0.2s' }}>Luxury Deep Cleaning</a></li>
-              <li><a href="#services" style={{ transition: 'color 0.2s' }}>Post-Construction Clean</a></li>
-              <li><a href="#services" style={{ transition: 'color 0.2s' }}>Commercial & Office Care</a></li>
-              <li><a href="#services" style={{ transition: 'color 0.2s' }}>Carpet & Steam Extraction</a></li>
-              <li><a href="#services" style={{ transition: 'color 0.2s' }}>Fumigation & Pest Control</a></li>
+              <li><Link to="/services" style={{ color: '#cbd5e1' }}>Full Services Catalog</Link></li>
+              <li><Link to="/calculator" style={{ color: '#cbd5e1' }}>Instant Price Calculator</Link></li>
+              <li><Link to="/transformations" style={{ color: '#cbd5e1' }}>Before & After Gallery</Link></li>
+              <li><Link to="/locations" style={{ color: '#cbd5e1' }}>Ghana Hubs & Coverage</Link></li>
+              <li><Link to="/about" style={{ color: '#cbd5e1' }}>About AuraClean Standards</Link></li>
+              <li><Link to="/contact" style={{ color: '#cbd5e1' }}>Contact & Hotline</Link></li>
             </ul>
           </div>
 
@@ -153,6 +154,11 @@ export function Footer({ onOpenBooking, onOpenTracking }) {
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <Link to="/admin" style={{ color: '#64748b', display: 'flex', alignItems: 'center', gap: '0.3rem' }} title="Staff Operations Portal">
+              <Lock size={12} />
+              <span>Staff Portal</span>
+            </Link>
+            <span>•</span>
             <span>Privacy Policy</span>
             <span>•</span>
             <span>Terms of Service</span>

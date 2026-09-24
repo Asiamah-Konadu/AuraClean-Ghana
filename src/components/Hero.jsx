@@ -1,32 +1,56 @@
-import React, { useState } from 'react';
-import { Sparkles, ShieldCheck, Star, Clock, CheckCircle2, ArrowRight, MessageSquare, PhoneCall, MapPin } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Sparkles, Star, CheckCircle2, ArrowRight, MessageSquare, PhoneCall, ShieldCheck, MapPin, Calculator, Award, Zap, Clock, ThumbsUp } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { SERVICES_DATA } from '../data/servicesData';
-import { formatGHS, DISPLAY_PHONE, getWhatsAppLink } from '../utils/formatters';
+import { DISPLAY_PHONE, getWhatsAppLink } from '../utils/formatters';
 
 export function Hero({ onOpenBooking }) {
-  const [selectedService, setSelectedService] = useState('deep-clean');
-  const [bedrooms, setBedrooms] = useState(2);
-  const [frequency, setFrequency] = useState('one-time');
+  const [activeHighlight, setActiveHighlight] = useState(0);
 
-  // Fast estimate calculation
-  const currentServiceObj = SERVICES_DATA.find(s => s.id === selectedService) || SERVICES_DATA[0];
-  const base = currentServiceObj.basePrice;
-  const extraBedrooms = Math.max(0, bedrooms - 1);
-  const roomCost = extraBedrooms * 60;
-  const subtotal = base + roomCost;
-  const discount = frequency === 'weekly' ? 0.2 : frequency === 'bi-weekly' ? 0.15 : 0;
-  const estimatedPrice = Math.round(subtotal * (1 - discount));
+  const heroHighlights = [
+    {
+      title: "Luxury Residential Deep Cleaning",
+      area: "East Legon & Cantonments",
+      badge: "5★ Hospital-Grade",
+      img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
+      serviceId: "deep-clean"
+    },
+    {
+      title: "Corporate & Embassy Headquarters Care",
+      area: "Ridge, Airport City & Osu",
+      badge: "Corporate Choice",
+      img: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
+      serviceId: "commercial-office"
+    },
+    {
+      title: "Post-Construction & Move-In Polish",
+      area: "Airport Residential & Kumasi Ahodwo",
+      badge: "Heavy Duty Finish",
+      img: "https://images.unsplash.com/photo-1527515637462-cff94eecc1ac?auto=format&fit=crop&w=1200&q=80",
+      serviceId: "post-construction"
+    }
+  ];
+
+  // Auto-rotate hero highlights
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveHighlight((prev) => (prev + 1) % heroHighlights.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const currentHero = heroHighlights[activeHighlight];
 
   return (
     <section style={{
       position: 'relative',
-      padding: '4rem 0 5rem 0',
+      padding: '4.5rem 0 5.5rem 0',
       overflow: 'hidden',
-      background: 'radial-gradient(ellipse at 50% -20%, rgba(16, 185, 129, 0.15) 0%, rgba(248, 250, 252, 0) 70%)'
+      background: 'radial-gradient(ellipse at 50% -15%, rgba(16, 185, 129, 0.18) 0%, rgba(245, 158, 11, 0.08) 45%, rgba(248, 250, 252, 0) 75%)'
     }}>
-      {/* Background glow effects */}
-      <div className="hero-glow-1"></div>
-      <div className="hero-glow-2"></div>
+      {/* Dynamic Animated Ambient Orbs */}
+      <div className="hero-glow-1 animate-pulse-glow"></div>
+      <div className="hero-glow-2 animate-pulse-glow" style={{ animationDelay: '2s' }}></div>
 
       <div className="container" style={{ position: 'relative', zIndex: 1 }}>
         <div style={{
@@ -34,36 +58,39 @@ export function Hero({ onOpenBooking }) {
           gridTemplateColumns: '1fr',
           gap: '3.5rem',
           alignItems: 'center'
-        }} className="hero-grid">
+        }} className="hero-main-grid">
           
-          {/* Left Column: Value Proposition */}
+          {/* Left Column: Value Proposition & Animated Headlines */}
           <div>
-            {/* Top Ghana Badge */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
-              <span className="badge-emerald">
-                <Sparkles size={14} /> #1 Rated Cleaning Service in Ghana
-              </span>
-              <span className="badge-gold">
-                <Star size={14} fill="#f59e0b" color="#f59e0b" /> 4.98 Google Rating (Accra & Kumasi)
-              </span>
+            {/* Top Badges */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
+              <div className="badge-emerald animate-fade-in">
+                <Sparkles size={14} className="animate-sparkle" /> 
+                <span>Ghana's Premier 5-Star Cleaning House</span>
+              </div>
+              <div className="badge-gold animate-fade-in" style={{ animationDelay: '0.15s' }}>
+                <Star size={14} fill="#f59e0b" color="#f59e0b" />
+                <span>4.98 Google Score (Accra, Tema & Kumasi)</span>
+              </div>
             </div>
 
             {/* Main Headline */}
             <h1 style={{
-              fontSize: 'clamp(2.4rem, 4.8vw, 3.8rem)',
+              fontSize: 'clamp(2.5rem, 5vw, 4.1rem)',
               fontWeight: '800',
-              letterSpacing: '-0.03em',
-              lineHeight: 1.15,
+              letterSpacing: '-0.035em',
+              lineHeight: 1.12,
               marginBottom: '1.5rem',
               color: 'var(--text-primary)'
             }}>
-              Spotless Luxury Living, <br />
+              Immaculate Living, <br />
               <span style={{
-                background: 'linear-gradient(135deg, #059669 0%, #10b981 50%, #f59e0b 100%)',
+                background: 'linear-gradient(135deg, #059669 0%, #10b981 40%, #f59e0b 100%)',
                 WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
+                WebkitTextFillColor: 'transparent',
+                display: 'inline-block'
               }}>
-                Crafted for Ghana.
+                Masterfully Executed in Ghana.
               </span>
             </h1>
 
@@ -71,260 +98,271 @@ export function Hero({ onOpenBooking }) {
             <p style={{
               fontSize: '1.15rem',
               color: 'var(--text-secondary)',
-              lineHeight: 1.6,
-              marginBottom: '2rem',
-              maxWidth: '560px'
+              lineHeight: 1.65,
+              marginBottom: '2.25rem',
+              maxWidth: '580px'
             }}>
-              From luxury apartments in <strong>East Legon & Cantonments</strong> to commercial headquarters in <strong>Ridge & Kumasi</strong>. Experience vetted 5-star cleaning teams, hospital-grade eco-sanitizers, and seamless booking.
+              From luxury apartments in <strong>East Legon, Cantonments & Airport</strong> to executive offices in <strong>Ridge & Kumasi</strong>. Experience vetted 5-star cleaning squads, hospital-grade eco-disinfection, and effortless online booking.
             </p>
 
-            {/* Value Checkpoints */}
+            {/* Value Checkpoints Grid */}
             <div style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(210px, 1fr))',
               gap: '0.85rem',
               marginBottom: '2.5rem'
             }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.92rem', color: 'var(--text-secondary)' }}>
-                <CheckCircle2 size={18} color="var(--primary-light)" />
-                <span>100% Background-Vetted Pros</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', fontSize: '0.92rem', color: 'var(--text-primary)', fontWeight: '600' }}>
+                <div style={{ background: 'var(--primary-subtle)', padding: '4px', borderRadius: '50%', display: 'flex' }}>
+                  <CheckCircle2 size={16} color="var(--primary-light)" />
+                </div>
+                <span>100% Background-Vetted Staff</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.92rem', color: 'var(--text-secondary)' }}>
-                <CheckCircle2 size={18} color="var(--primary-light)" />
-                <span>Pay with MTN MoMo / Telecel</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', fontSize: '0.92rem', color: 'var(--text-primary)', fontWeight: '600' }}>
+                <div style={{ background: 'var(--primary-subtle)', padding: '4px', borderRadius: '50%', display: 'flex' }}>
+                  <CheckCircle2 size={16} color="var(--primary-light)" />
+                </div>
+                <span>MTN MoMo & Telecel Accepted</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.92rem', color: 'var(--text-secondary)' }}>
-                <CheckCircle2 size={18} color="var(--primary-light)" />
-                <span>Full Re-Clean Guarantee</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', fontSize: '0.92rem', color: 'var(--text-primary)', fontWeight: '600' }}>
+                <div style={{ background: 'var(--primary-subtle)', padding: '4px', borderRadius: '50%', display: 'flex' }}>
+                  <CheckCircle2 size={16} color="var(--primary-light)" />
+                </div>
+                <span>Free Re-Clean Satisfaction Guarantee</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.92rem', color: 'var(--text-secondary)' }}>
-                <CheckCircle2 size={18} color="var(--primary-light)" />
-                <span>Eco-Safe Hospital Disinfectants</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.55rem', fontSize: '0.92rem', color: 'var(--text-primary)', fontWeight: '600' }}>
+                <div style={{ background: 'var(--primary-subtle)', padding: '4px', borderRadius: '50%', display: 'flex' }}>
+                  <CheckCircle2 size={16} color="var(--primary-light)" />
+                </div>
+                <span>Hospital-Grade Eco Disinfectants</span>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap', marginBottom: '2.5rem' }}>
               <button
-                onClick={() => onOpenBooking(selectedService)}
-                className="btn btn-primary"
-                style={{ padding: '0.95rem 2rem', fontSize: '1.05rem' }}
+                onClick={() => onOpenBooking(currentHero.serviceId)}
+                className="btn btn-primary shimmer-btn"
+                style={{ padding: '0.95rem 2.2rem', fontSize: '1.05rem', boxShadow: '0 8px 25px var(--primary-glow)' }}
               >
                 <Sparkles size={18} />
                 <span>Book Instant Clean</span>
                 <ArrowRight size={18} />
               </button>
 
+              <Link
+                to="/calculator"
+                className="btn btn-secondary"
+                style={{ padding: '0.95rem 1.75rem', fontSize: '1.02rem', gap: '0.6rem' }}
+              >
+                <Calculator size={18} color="var(--accent-gold-dark)" />
+                <span>Calculate Cost</span>
+              </Link>
+
               <a
-                href={getWhatsAppLink('Hello AuraClean Ghana! I would like to get a quote.')}
+                href={getWhatsAppLink('Hello AuraClean Ghana! I would like to schedule a clean.')}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-whatsapp"
-                style={{ padding: '0.95rem 1.75rem', fontSize: '1.02rem' }}
+                style={{ padding: '0.95rem 1.6rem', fontSize: '1.02rem' }}
               >
                 <MessageSquare size={18} />
-                <span>WhatsApp ({DISPLAY_PHONE})</span>
+                <span>WhatsApp</span>
               </a>
             </div>
 
-            {/* Trust Bar */}
+            {/* Trust Proof Bar */}
             <div style={{
               display: 'flex',
               alignItems: 'center',
               gap: '1.5rem',
-              marginTop: '2.5rem',
-              paddingTop: '1.5rem',
+              paddingTop: '1.75rem',
               borderTop: '1px solid var(--border-subtle)',
               flexWrap: 'wrap'
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <div style={{ display: 'flex', color: '#f59e0b' }}>
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} size={15} fill="#f59e0b" />
+                    <Star key={i} size={16} fill="#f59e0b" color="#f59e0b" />
                   ))}
                 </div>
-                <span style={{ fontSize: '0.88rem', fontWeight: '700', color: 'var(--text-primary)' }}>4.98 / 5.0</span>
+                <span style={{ fontSize: '0.92rem', fontWeight: '800', color: 'var(--text-primary)' }}>4.98 / 5.0</span>
               </div>
               <span style={{ color: 'var(--text-muted)' }}>•</span>
-              <span style={{ fontSize: '0.88rem', color: 'var(--text-secondary)' }}>
-                Over <strong>1,850+</strong> Satisfied Ghanaian Homes & Offices
+              <span style={{ fontSize: '0.9rem', color: 'var(--text-secondary)' }}>
+                Trusted by <strong>1,850+</strong> Ghanaian Estates, Villas & Offices
               </span>
             </div>
           </div>
 
-          {/* Right Column: Interactive Quick Quote & Calculator Card */}
-          <div>
+          {/* Right Column: Animated Luxury Interactive Showcase Visual */}
+          <div style={{ position: 'relative' }}>
+            
+            {/* Main Showcase Card with Smooth Image */}
             <div className="glass-panel" style={{
-              padding: '2rem',
+              position: 'relative',
+              borderRadius: '26px',
+              overflow: 'hidden',
               boxShadow: 'var(--shadow-lg)',
-              border: '1px solid var(--border-primary)',
-              position: 'relative'
+              border: '2px solid var(--border-glass)'
             }}>
-              {/* Header Badge */}
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
-                <div>
-                  <span className="badge-emerald" style={{ marginBottom: '0.35rem' }}>Instant Ghana Price Estimator</span>
-                  <h3 style={{ fontSize: '1.35rem', fontWeight: '800' }}>Get Your Clean Quote</h3>
-                </div>
-                <div style={{
-                  background: 'var(--accent-gold-subtle)',
-                  color: 'var(--accent-gold-dark)',
-                  padding: '0.4rem 0.75rem',
-                  borderRadius: 'var(--radius-md)',
-                  fontSize: '0.75rem',
-                  fontWeight: '700',
-                  textAlign: 'right'
-                }}>
-                  Zero Obligation
-                </div>
-              </div>
-
-              {/* Service Selection Chips */}
-              <div style={{ marginBottom: '1.25rem' }}>
-                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
-                  1. Choose Service Type:
-                </label>
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(2, 1fr)',
-                  gap: '0.5rem'
-                }}>
-                  {SERVICES_DATA.slice(0, 4).map((svc) => {
-                    const isSelected = selectedService === svc.id;
-                    return (
-                      <button
-                        key={svc.id}
-                        type="button"
-                        onClick={() => setSelectedService(svc.id)}
-                        style={{
-                          padding: '0.65rem 0.75rem',
-                          borderRadius: 'var(--radius-md)',
-                          border: `1.5px solid ${isSelected ? 'var(--primary-light)' : 'var(--border-subtle)'}`,
-                          background: isSelected ? 'var(--primary-subtle)' : 'var(--bg-surface-elevated)',
-                          color: isSelected ? 'var(--primary-light)' : 'var(--text-primary)',
-                          fontWeight: isSelected ? '700' : '500',
-                          fontSize: '0.82rem',
-                          textAlign: 'left',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'space-between',
-                          transition: 'all 0.2s ease'
-                        }}
-                      >
-                        <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{svc.name.split(' ')[0]} {svc.name.split(' ')[1]}</span>
-                        {isSelected && <CheckCircle2 size={14} color="var(--primary-light)" />}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-
-              {/* Bedrooms Slider */}
-              <div style={{ marginBottom: '1.25rem' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.4rem' }}>
-                  <label style={{ fontSize: '0.85rem', fontWeight: '600', color: 'var(--text-secondary)' }}>
-                    2. Bedrooms / Area Size:
-                  </label>
-                  <span style={{ fontSize: '0.9rem', fontWeight: '700', color: 'var(--primary-light)' }}>
-                    {bedrooms === 1 ? '1 Bedroom / Studio' : `${bedrooms} Bedrooms`}
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min="1"
-                  max="6"
-                  value={bedrooms}
-                  onChange={(e) => setBedrooms(Number(e.target.value))}
+              <div style={{ position: 'relative', height: '440px', overflow: 'hidden' }}>
+                <img
+                  src={currentHero.img}
+                  alt={currentHero.title}
                   style={{
                     width: '100%',
-                    accentColor: 'var(--primary-light)',
-                    cursor: 'pointer'
+                    height: '100%',
+                    objectFit: 'cover',
+                    transition: 'all 0.8s cubic-bezier(0.16, 1, 0.3, 1)',
+                    transform: 'scale(1.02)'
                   }}
                 />
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.25rem' }}>
-                  <span>1 Bed</span>
-                  <span>2 Beds</span>
-                  <span>3 Beds</span>
-                  <span>4 Beds</span>
-                  <span>5+ Beds (Villa)</span>
-                </div>
-              </div>
+                
+                {/* Gradient Shading */}
+                <div style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(to top, rgba(9, 13, 22, 0.92) 0%, rgba(9, 13, 22, 0.25) 50%, rgba(0,0,0,0.05) 100%)'
+                }}></div>
 
-              {/* Frequency Selector */}
-              <div style={{ marginBottom: '1.5rem' }}>
-                <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: '600', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
-                  3. Cleaning Frequency:
-                </label>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.4rem' }}>
-                  {[
-                    { id: 'one-time', label: 'One-Time', tag: 'Standard' },
-                    { id: 'bi-weekly', label: 'Bi-Weekly', tag: 'Save 15%' },
-                    { id: 'weekly', label: 'Weekly', tag: 'Save 20%' }
-                  ].map((freq) => (
-                    <button
-                      key={freq.id}
-                      type="button"
-                      onClick={() => setFrequency(freq.id)}
-                      style={{
-                        padding: '0.5rem',
-                        borderRadius: 'var(--radius-sm)',
-                        border: `1px solid ${frequency === freq.id ? 'var(--accent-gold)' : 'var(--border-subtle)'}`,
-                        background: frequency === freq.id ? 'var(--accent-gold-subtle)' : 'var(--bg-surface-elevated)',
-                        color: frequency === freq.id ? 'var(--accent-gold-dark)' : 'var(--text-secondary)',
-                        fontSize: '0.75rem',
-                        fontWeight: '600',
-                        textAlign: 'center'
-                      }}
-                    >
-                      <div>{freq.label}</div>
-                      <span style={{ fontSize: '0.65rem', opacity: 0.85 }}>{freq.tag}</span>
-                    </button>
-                  ))}
+                {/* Top Badge on Image */}
+                <div style={{
+                  position: 'absolute',
+                  top: '1.25rem',
+                  left: '1.25rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem'
+                }}>
+                  <span style={{
+                    background: 'rgba(255, 255, 255, 0.95)',
+                    color: '#065f46',
+                    fontSize: '0.78rem',
+                    fontWeight: '800',
+                    padding: '0.4rem 0.85rem',
+                    borderRadius: 'var(--radius-full)',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.25)'
+                  }}>
+                    ★ {currentHero.badge}
+                  </span>
                 </div>
-              </div>
 
-              {/* Instant Price Output Box */}
-              <div style={{
-                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(245, 158, 11, 0.12) 100%)',
-                borderRadius: 'var(--radius-md)',
-                padding: '1.25rem',
-                border: '1px solid var(--border-primary)',
-                marginBottom: '1.25rem'
-              }}>
-                <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between' }}>
-                  <div>
-                    <span style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                      Estimated Total:
-                    </span>
-                    <div style={{ fontSize: '1.85rem', fontWeight: '800', color: 'var(--primary-light)', lineHeight: 1.1 }}>
-                      {formatGHS(estimatedPrice)}
-                    </div>
+                {/* Bottom Overlay Info */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: '1.5rem',
+                  left: '1.5rem',
+                  right: '1.5rem',
+                  color: '#ffffff'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#34d399', fontSize: '0.82rem', fontWeight: '700', marginBottom: '0.3rem' }}>
+                    <MapPin size={14} />
+                    <span>Serving {currentHero.area}</span>
                   </div>
-                  <div style={{ textAlign: 'right' }}>
-                    <span className="badge-emerald" style={{ fontSize: '0.7rem' }}>
-                      <Clock size={12} /> {currentServiceObj.duration}
-                    </span>
-                    <div style={{ fontSize: '0.72rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
-                      All supplies & transport included
-                    </div>
+                  <h3 style={{ fontSize: '1.45rem', fontWeight: '800', color: '#ffffff', marginBottom: '0.75rem' }}>
+                    {currentHero.title}
+                  </h3>
+                  
+                  {/* Slide Indicators */}
+                  <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.75rem' }}>
+                    {heroHighlights.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={() => setActiveHighlight(idx)}
+                        style={{
+                          height: '5px',
+                          flexGrow: 1,
+                          borderRadius: '4px',
+                          background: activeHighlight === idx ? '#34d399' : 'rgba(255, 255, 255, 0.3)',
+                          transition: 'all 0.3s ease'
+                        }}
+                      />
+                    ))}
                   </div>
                 </div>
-              </div>
-
-              {/* Book Button */}
-              <button
-                onClick={() => onOpenBooking(selectedService, bedrooms, frequency)}
-                className="btn btn-primary"
-                style={{ width: '100%', padding: '0.9rem', fontSize: '1rem' }}
-              >
-                <span>Proceed to Reserve Slot</span>
-                <ArrowRight size={16} />
-              </button>
-
-              <div style={{ textAlign: 'center', marginTop: '0.75rem', fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                🔒 No advance credit card needed • Pay with MoMo or after inspection
               </div>
             </div>
+
+            {/* Floating Floating Glass Badges (Top Right & Bottom Left) */}
+            
+            {/* Floating Badge 1: Live Dispatch */}
+            <div className="glass-panel-strong animate-float" style={{
+              position: 'absolute',
+              top: '-1.5rem',
+              right: '-1.25rem',
+              padding: '0.85rem 1.25rem',
+              borderRadius: 'var(--radius-md)',
+              border: '1.5px solid rgba(16, 185, 129, 0.4)',
+              boxShadow: '0 12px 30px rgba(0, 0, 0, 0.25)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              zIndex: 3
+            }}>
+              <div style={{
+                width: '38px',
+                height: '38px',
+                borderRadius: '10px',
+                background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
+                color: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px rgba(16, 185, 129, 0.4)'
+              }}>
+                <Zap size={20} />
+              </div>
+              <div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+                  <span className="pulse-dot" style={{ width: '6px', height: '6px' }}></span>
+                  <span style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--primary-light)', textTransform: 'uppercase' }}>
+                    Just Dispatched
+                  </span>
+                </div>
+                <div style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>
+                  Squad en route to East Legon
+                </div>
+              </div>
+            </div>
+
+            {/* Floating Badge 2: Verified Ghana Standards */}
+            <div className="glass-panel-strong animate-float-delayed" style={{
+              position: 'absolute',
+              bottom: '-1.75rem',
+              left: '-1.25rem',
+              padding: '0.85rem 1.25rem',
+              borderRadius: 'var(--radius-md)',
+              border: '1.5px solid rgba(245, 158, 11, 0.4)',
+              boxShadow: '0 12px 30px rgba(0, 0, 0, 0.25)',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.75rem',
+              zIndex: 3
+            }}>
+              <div style={{
+                width: '38px',
+                height: '38px',
+                borderRadius: '10px',
+                background: 'linear-gradient(135deg, #d97706 0%, #f59e0b 100%)',
+                color: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 12px rgba(245, 158, 11, 0.4)'
+              }}>
+                <ShieldCheck size={20} />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.75rem', fontWeight: '800', color: 'var(--accent-gold-dark)', textTransform: 'uppercase' }}>
+                  CID Police Vetted
+                </div>
+                <div style={{ fontSize: '0.85rem', fontWeight: '700', color: 'var(--text-primary)' }}>
+                  100% Supervised Ghana Teams
+                </div>
+              </div>
+            </div>
+
           </div>
 
         </div>
@@ -332,8 +370,13 @@ export function Hero({ onOpenBooking }) {
 
       <style>{`
         @media (min-width: 992px) {
-          .hero-grid {
+          .hero-main-grid {
             grid-template-columns: 1.15fr 0.85fr !important;
+          }
+        }
+        @media (max-width: 640px) {
+          .hero-main-grid {
+            gap: 2rem !important;
           }
         }
       `}</style>

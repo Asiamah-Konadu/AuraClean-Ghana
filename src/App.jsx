@@ -1,34 +1,38 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { StatsBanner } from './components/StatsBanner';
-import { ServicesSection } from './components/ServicesSection';
-import { PricingCalculator } from './components/PricingCalculator';
-import { BeforeAfterSlider } from './components/BeforeAfterSlider';
-import { WhyChooseUs } from './components/WhyChooseUs';
-import { CoverageAreas } from './components/CoverageAreas';
-import { Testimonials } from './components/Testimonials';
-import { FAQSection } from './components/FAQSection';
+import { Footer } from './components/Footer';
 import { BookingModal } from './components/BookingModal';
 import { TrackingModal } from './components/TrackingModal';
-import { AdminDashboard } from './components/AdminDashboard';
 import { WhatsAppButton } from './components/WhatsAppButton';
-import { Footer } from './components/Footer';
 
-export function App() {
-  const [darkMode, setDarkMode] = useState(false);
+// Pages
+import { HomePage } from './pages/HomePage';
+import { ServicesPage } from './pages/ServicesPage';
+import { EstimatorPage } from './pages/EstimatorPage';
+import { TransformationsPage } from './pages/TransformationsPage';
+import { LocationsPage } from './pages/LocationsPage';
+import { AboutPage } from './pages/AboutPage';
+import { ContactPage } from './pages/ContactPage';
+import { AdminPage } from './pages/AdminPage';
+
+// Scroll to top helper on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
+// Inner App with Layout Wrapper
+function MainLayout({ darkMode, setDarkMode }) {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [isTrackingOpen, setIsTrackingOpen] = useState(false);
-  const [isAdminMode, setIsAdminMode] = useState(false);
   const [bookingConfig, setBookingConfig] = useState(null);
+  const location = useLocation();
 
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-    }
-  }, [darkMode]);
+  const isAdminRoute = location.pathname.startsWith('/admin');
 
   const handleOpenBooking = (serviceId = 'deep-clean', bedrooms = 2, frequency = 'one-time', addons = []) => {
     setBookingConfig({
@@ -47,55 +51,99 @@ export function App() {
 
   return (
     <div className="app-container" style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      
-      {/* Sticky Navbar */}
-      <Navbar
-        onOpenBooking={() => handleOpenBooking()}
-        onOpenTracking={() => setIsTrackingOpen(true)}
-        onToggleAdmin={() => setIsAdminMode(!isAdminMode)}
-        isAdminMode={isAdminMode}
-        darkMode={darkMode}
-        setDarkMode={setDarkMode}
-      />
+      <ScrollToTop />
 
-      {/* Main View: Either Admin Back-Office or Customer Website */}
-      {isAdminMode ? (
-        <AdminDashboard onClose={() => setIsAdminMode(false)} />
-      ) : (
-        <main>
-          {/* 1. Hero Section */}
-          <Hero onOpenBooking={handleOpenBooking} />
+      {/* Customer Header only on customer facing pages */}
+      {!isAdminRoute && (
+        <Navbar
+          onOpenBooking={() => handleOpenBooking()}
+          onOpenTracking={() => setIsTrackingOpen(true)}
+          darkMode={darkMode}
+          setDarkMode={setDarkMode}
+        />
+      )}
 
-          {/* 2. Stats and Credibility Banner */}
-          <StatsBanner />
-
-          {/* 3. Comprehensive Services Grid */}
-          <ServicesSection onSelectService={(serviceId) => handleOpenBooking(serviceId)} />
-
-          {/* 4. Interactive Live Price Calculator */}
-          <PricingCalculator onBookWithConfig={handleBookWithConfig} />
-
-          {/* 5. Before & After Transformation Slider */}
-          <BeforeAfterSlider />
-
-          {/* 6. Why Choose Us (Ghana Security & Standards) */}
-          <WhyChooseUs onOpenBooking={() => handleOpenBooking()} />
-
-          {/* 7. Coverage Areas & Dispatch Hubs */}
-          <CoverageAreas onSelectLocation={() => handleOpenBooking()} />
-
-          {/* 8. Testimonials & Google Ratings */}
-          <Testimonials />
-
-          {/* 9. FAQ Section */}
-          <FAQSection />
-
-          {/* 10. Footer */}
-          <Footer
-            onOpenBooking={() => handleOpenBooking()}
-            onOpenTracking={() => setIsTrackingOpen(true)}
+      {/* Main Routed Content */}
+      <main style={{ flexGrow: 1 }}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <HomePage
+                onOpenBooking={handleOpenBooking}
+                onSelectService={(svcId) => handleOpenBooking(svcId)}
+              />
+            }
           />
-        </main>
+          <Route
+            path="/services"
+            element={
+              <ServicesPage
+                onSelectService={(svcId) => handleOpenBooking(svcId)}
+              />
+            }
+          />
+          <Route
+            path="/calculator"
+            element={
+              <EstimatorPage
+                onBookWithConfig={handleBookWithConfig}
+              />
+            }
+          />
+          <Route
+            path="/estimator"
+            element={
+              <EstimatorPage
+                onBookWithConfig={handleBookWithConfig}
+              />
+            }
+          />
+          <Route
+            path="/transformations"
+            element={
+              <TransformationsPage
+                onOpenBooking={() => handleOpenBooking()}
+              />
+            }
+          />
+          <Route
+            path="/locations"
+            element={
+              <LocationsPage
+                onOpenBooking={(loc) => handleOpenBooking()}
+              />
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <AboutPage
+                onOpenBooking={() => handleOpenBooking()}
+              />
+            }
+          />
+          <Route
+            path="/contact"
+            element={
+              <ContactPage
+                onOpenBooking={() => handleOpenBooking()}
+              />
+            }
+          />
+          <Route
+            path="/admin"
+            element={<AdminPage />}
+          />
+        </Routes>
+      </main>
+
+      {/* Customer Footer only on customer facing pages */}
+      {!isAdminRoute && (
+        <Footer
+          onOpenBooking={() => handleOpenBooking()}
+          onOpenTracking={() => setIsTrackingOpen(true)}
+        />
       )}
 
       {/* Interactive Booking Modal */}
@@ -112,8 +160,26 @@ export function App() {
       />
 
       {/* Floating WhatsApp Quick Connect Button */}
-      <WhatsAppButton />
+      {!isAdminRoute && <WhatsAppButton />}
     </div>
+  );
+}
+
+export function App() {
+  const [darkMode, setDarkMode] = useState(false);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+  }, [darkMode]);
+
+  return (
+    <BrowserRouter>
+      <MainLayout darkMode={darkMode} setDarkMode={setDarkMode} />
+    </BrowserRouter>
   );
 }
 
