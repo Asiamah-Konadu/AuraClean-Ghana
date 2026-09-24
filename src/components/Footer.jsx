@@ -28,19 +28,17 @@ export function Footer({ onOpenBooking, onOpenTracking }) {
           
           {/* Brand Col */}
           <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '1.25rem' }}>
-              <div style={{
-                width: '38px',
-                height: '38px',
-                borderRadius: '10px',
-                background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#ffffff'
-              }}>
-                <Sparkles size={20} />
-              </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
+              <img
+                src="/favicon.svg"
+                alt="AuraClean Ghana Logo"
+                style={{
+                  width: '42px',
+                  height: '42px',
+                  objectFit: 'contain',
+                  filter: 'drop-shadow(0 4px 12px rgba(63, 169, 220, 0.45))'
+                }}
+              />
               <span style={{ fontSize: '1.4rem', fontWeight: '800', letterSpacing: '-0.02em', color: '#ffffff' }}>
                 Aura<span style={{ color: '#34d399' }}>Clean</span> <span style={{ fontSize: '0.8rem', color: '#f59e0b' }}>GHANA</span>
               </span>

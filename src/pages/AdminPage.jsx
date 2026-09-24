@@ -195,20 +195,17 @@ export function AdminPage() {
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)'
         }}>
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <div style={{
-              width: '56px',
-              height: '56px',
-              borderRadius: '16px',
-              background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
-              color: '#ffffff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 1rem auto',
-              boxShadow: '0 8px 25px rgba(16, 185, 129, 0.4)'
-            }}>
-              <Shield size={28} />
-            </div>
+            <img
+              src="/favicon.svg"
+              alt="AuraClean Ghana"
+              style={{
+                width: '64px',
+                height: '64px',
+                margin: '0 auto 1.25rem auto',
+                display: 'block',
+                filter: 'drop-shadow(0 8px 24px rgba(63, 169, 220, 0.5))'
+              }}
+            />
             <h2 style={{ fontSize: '1.5rem', fontWeight: '800', color: '#ffffff', marginBottom: '0.35rem' }}>
               AuraClean Operations Hub
             </h2>
@@ -294,19 +291,16 @@ export function AdminPage() {
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem' }}>
           
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <div style={{
-              width: '38px',
-              height: '38px',
-              borderRadius: '10px',
-              background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
-              color: '#ffffff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
-            }}>
-              <Shield size={20} />
-            </div>
+            <img
+              src="/favicon.svg"
+              alt="AuraClean Ghana"
+              style={{
+                width: '40px',
+                height: '40px',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 2px 8px rgba(63, 169, 220, 0.35))'
+              }}
+            />
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <span style={{ fontSize: '1.2rem', fontWeight: '800', color: 'var(--text-primary)' }}>

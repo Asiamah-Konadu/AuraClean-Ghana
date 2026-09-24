@@ -84,19 +84,16 @@ export function AdminDashboard({ onClose }) {
           borderBottom: '1px solid var(--border-subtle)'
         }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-            <div style={{
-              width: '46px',
-              height: '46px',
-              borderRadius: '12px',
-              background: 'linear-gradient(135deg, #d97706 0%, #f59e0b 100%)',
-              color: '#ffffff',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              boxShadow: '0 4px 14px rgba(245, 158, 11, 0.4)'
-            }}>
-              <Shield size={24} />
-            </div>
+            <img
+              src="/favicon.svg"
+              alt="AuraClean Ghana"
+              style={{
+                width: '46px',
+                height: '46px',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 2px 10px rgba(63, 169, 220, 0.4))'
+              }}
+            />
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <h1 style={{ fontSize: '1.6rem', fontWeight: '800' }}>AuraClean Dispatch & Operations</h1>

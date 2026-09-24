@@ -223,22 +223,19 @@ export function Navbar({ onOpenBooking, onOpenTracking, darkMode, setDarkMode })
         <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '4.85rem' }}>
           
           {/* Brand Logo */}
-          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', textDecoration: 'none' }}>
-            <div style={{
-              width: '46px',
-              height: '46px',
-              borderRadius: '14px',
-              background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#ffffff',
-              boxShadow: '0 4px 18px rgba(16, 185, 129, 0.45)',
-              transition: 'transform 0.25s ease',
-              position: 'relative'
-            }} className="logo-badge">
-              <Sparkles size={24} className="animate-sparkle" />
-            </div>
+          <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', textDecoration: 'none' }}>
+            <img
+              src="/favicon.svg"
+              alt="AuraClean Ghana"
+              className="logo-badge"
+              style={{
+                width: '46px',
+                height: '46px',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 4px 14px rgba(63, 169, 220, 0.4))',
+                transition: 'transform 0.25s ease'
+              }}
+            />
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.45rem' }}>
                 <span style={{ fontSize: '1.5rem', fontWeight: '800', letterSpacing: '-0.03em', color: 'var(--text-primary)' }}>
