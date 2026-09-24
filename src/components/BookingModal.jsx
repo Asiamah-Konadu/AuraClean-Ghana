@@ -457,7 +457,7 @@ export function BookingModal({ isOpen, onClose, initialConfig }) {
                         required
                         value={phone}
                         onChange={(e) => setPhone(e.target.value)}
-                        placeholder="e.g. 055 010 3277"
+                        placeholder="e.g. 054 887 7173"
                         style={{ width: '100%', padding: '0.75rem', borderRadius: 'var(--radius-md)', border: '1px solid var(--border-subtle)', background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
                       />
                     </div>

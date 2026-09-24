@@ -23,7 +23,7 @@ export function FAQSection() {
     },
     {
       q: 'What is your 24-Hour Satisfaction Guarantee?',
-      a: 'Your peace of mind is our utmost priority. If you notice any area or fixture that does not meet our standard, message us on WhatsApp or call 055 010 3277 within 24 hours, and our squad will return to re-clean that specific area completely free of charge.'
+      a: 'Your peace of mind is our utmost priority. If you notice any area or fixture that does not meet our standard, message us on WhatsApp or call 054 887 7173 within 24 hours, and our squad will return to re-clean that specific area completely free of charge.'
     },
     {
       q: 'Which cities and regions in Ghana do you currently service?',

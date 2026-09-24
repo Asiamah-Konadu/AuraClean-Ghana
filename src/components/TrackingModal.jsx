@@ -128,7 +128,7 @@ export function TrackingModal({ isOpen, onClose }) {
           {/* Quick Demo Tag */}
           {!booking && !errorMsg && (
             <div style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
-              💡 Try testing with demo tracking code: <strong style={{ color: 'var(--primary-light)', cursor: 'pointer' }} onClick={() => { setSearchQuery('AC-GH-1092'); }}>AC-GH-1092</strong> or <strong style={{ color: 'var(--primary-light)', cursor: 'pointer' }} onClick={() => { setSearchQuery('0550103277'); }}>0550103277</strong>
+              💡 Try testing with demo tracking code: <strong style={{ color: 'var(--primary-light)', cursor: 'pointer' }} onClick={() => { setSearchQuery('AC-GH-1092'); }}>AC-GH-1092</strong> or <strong style={{ color: 'var(--primary-light)', cursor: 'pointer' }} onClick={() => { setSearchQuery('0548877173'); }}>0548877173</strong>
             </div>
           )}
 

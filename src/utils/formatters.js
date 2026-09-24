@@ -1,8 +1,8 @@
 // Utilities for AuraClean Ghana
 
-export const WHATSAPP_NUMBER = '233550103277';
-export const DISPLAY_PHONE = '055 010 3277';
-export const DISPLAY_PHONE_INTL = '+233 55 010 3277';
+export const WHATSAPP_NUMBER = '233548877173';
+export const DISPLAY_PHONE = '054 887 7173';
+export const DISPLAY_PHONE_INTL = '+233 54 887 7173';
 export const COMPANY_EMAIL = 'info@auraclean.gh';
 export const COMPANY_LOCATION = 'East Legon, Accra - Ghana';
 

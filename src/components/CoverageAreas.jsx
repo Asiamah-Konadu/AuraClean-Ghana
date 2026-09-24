@@ -200,7 +200,7 @@ export function CoverageAreas({ onSelectLocation }) {
               <strong>Don't see your specific estate or location?</strong> We cover up to 50km from all major city centres.
             </div>
             <a
-              href="https://wa.me/233550103277?text=Hello%20AuraClean,%20do%20you%20service%20my%20area?"
+              href="https://wa.me/233548877173?text=Hello%20AuraClean,%20do%20you%20service%20my%20area?"
               target="_blank"
               rel="noopener noreferrer"
               className="btn-gold btn"
